@@ -1,0 +1,8 @@
+{
+  "filters": [
+    {
+      "runWith": "nodejs",
+      "script": "./index.js"
+    }
+  ]
+}
