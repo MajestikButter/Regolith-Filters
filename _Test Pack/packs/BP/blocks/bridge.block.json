@@ -1,0 +1,89 @@
+{
+  "format_version": "1.16.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "tl:bridge.block",
+      "category": "Construction",
+      "properties": {
+        "tl:color": [-1, 0, 1, 2, 3]
+      }
+    },
+    "components": {
+      "tag:stone": {},
+      "minecraft:destroy_time": 5,
+      "minecraft:unit_cube": {},
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "stained_clay",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:display_name": "hardened_clay",
+      "minecraft:on_player_destroyed": {
+        "event": "destroy"
+      },
+      "minecraft:on_player_placing": {
+        "event": "placing"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_property('tl:color') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "blue_stained_terracotta",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_property('tl:color') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "red_stained_terracotta",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_property('tl:color') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "yellow_stained_terracotta",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_property('tl:color') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "green_stained_terracotta",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ],
+    "events": {
+      "placing": {
+        "set_block_property": {
+          "tl:color": "q.scoreboard('teamcolor')"
+        }
+      },
+      "destroy": {
+        "run_command": {
+          "command": "function jsonrequests/minigames/duels/bridge/giveitem/block",
+          "target": "player"
+        }
+      }
+    }
+  }
+}
