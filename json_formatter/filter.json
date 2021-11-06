@@ -2,7 +2,8 @@
   "filters": [
     {
       "runWith": "nodejs",
-      "script": "./index.js"
+      "script": "./index.js",
+      "name": "majestik:json_formatter"
     }
   ]
 }
