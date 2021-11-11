@@ -38,13 +38,11 @@ fs.writeFileSync(
 );
 
 exec(`npx tsc -p "tsconfig.json"`, (err, stdout, stderr) => {
-  if (stdout) return console.error(stdout);
-  if (stderr) return console.error(stderr);
-  if (err) return console.error(err);
+  if (stdout) console.error(stdout);
+  if (stderr) console.error(stderr);
+  if (err && !stderr && !stderr) console.error(err);
 
-  console.log("Transpiled .ts to .js");
   if (settings.removeTS) {
-    console.log("Removing .ts files");
     glob(`${settings.path}/**/*.ts`, null, (err, files) => {
       files.forEach((filePath) => {
         fs.unlinkSync(filePath);

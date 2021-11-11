@@ -33,18 +33,15 @@ const randomCharStr = (length) => {
   return result;
 };
 
-const commentLine = (str) =>
-  (Math.random() > Math.random()
-    ? `/*${randomCharStr(Math.random() * 40 + 5)}*/${
-        Math.random() > 0.85 ? "\n" : ""
-      }`
-    : "") +
-  str +
-  (Math.random() > Math.random()
-    ? `/*${randomCharStr(Math.random() * 40 + 5)}*/${
-        Math.random() > 0.85 ? "\n" : ""
-      }`
-    : "");
+const commentLine = (str) => {
+  const rand = () =>
+    Math.random() > Math.random()
+      ? `/*${randomCharStr(Math.random() * 40 + 5)}*/${
+          Math.random() > 0.85 ? "\n" : ""
+        }`
+      : "";
+  return `${rand()}${str}${rand()}`;
+};
 
 function run(files) {
   files.forEach((filePath) => {
