@@ -3,6 +3,7 @@ const fs = require("fs");
 
 const defSettings = {
   enforceJSImports: false,
+  enforceExceptions: ["mojang-minecraft", "mojang-gametest"],
   singleLine: false,
   scriptPaths: ["BP/**/*.js"],
 };
@@ -38,7 +39,13 @@ function enforceJSImports(contents) {
   contents = contents.split("\n");
   for (let i = 0; i < contents.length; i++) {
     let line = contents[i].trim() + "";
-    if (!line.startsWith("import")) {
+    if (
+      !line.startsWith("import") ||
+      settings.enforceExceptions.some(
+        (v) =>
+          line.includes(`"${v}"`) || line.includes(`'${v}'`) || line.includes(`\`${v}\``)
+      )
+    ) {
       newContents.push(`${line}\n`);
       continue;
     }
@@ -55,7 +62,7 @@ function enforceJSImports(contents) {
     }
     newContents.push(`${line}\n`);
   }
-  return newContents;
+  return newContents.join("");
 }
 
 function singleLineify(contents) {
@@ -83,7 +90,7 @@ function run(files) {
     if (settings.enforceJSImports) file = enforceJSImports(file);
     if (settings.singleLine) file = singleLineify(file);
 
-    fs.writeFileSync(filePath, file.join(""));
+    fs.writeFileSync(filePath, typeof file === "string" ? file : file.join(""));
   });
 }
 
