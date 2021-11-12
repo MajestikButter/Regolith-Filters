@@ -2,6 +2,7 @@ const glob = require("glob");
 const fs = require("fs");
 
 const defSettings = {
+  enforceJSImports: false,
   singleLine: false,
   scriptPaths: ["BP/**/*.js"],
 };
@@ -32,6 +33,31 @@ function isEnded(str) {
   ]);
 }
 
+function enforceJSImports(contents) {
+  let newContents = [];
+  contents = contents.split("\n");
+  for (let i = 0; i < contents.length; i++) {
+    let line = contents[i].trim() + "";
+    if (!line.startsWith("import")) {
+      newContents.push(`${line}\n`);
+      continue;
+    }
+    let nonSemicolonFound = false;
+    for (let i0 = line.length - 1; i0 >= 0; i0--) {
+      if (line[i0] !== ";") nonSemicolonFound = true;
+      if (!nonSemicolonFound) continue;
+      let p0 = line.slice(0, i0);
+      if (!p0.endsWith(".js")) {
+        let p1 = line.slice(i0);
+        line = `${p0}.js${p1}`;
+      }
+      break;
+    }
+    newContents.push(`${line}\n`);
+  }
+  return newContents;
+}
+
 function singleLineify(contents) {
   contents = contents.split("\n");
   let newContents = [contents[0].trim()];
@@ -48,15 +74,16 @@ function singleLineify(contents) {
       throw err;
     }
   }
-  return newContents.join("");
+  return newContents;
 }
 
 function run(files) {
   files.forEach((filePath) => {
     let file = fs.readFileSync(filePath).toString();
+    if (settings.enforceJSImports) file = enforceJSImports(file);
     if (settings.singleLine) file = singleLineify(file);
 
-    fs.writeFileSync(filePath, file);
+    fs.writeFileSync(filePath, file.join(""));
   });
 }
 
