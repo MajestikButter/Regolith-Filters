@@ -1,0 +1,9 @@
+{
+  "name": "esbuild_executor",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "dependencies": {
+    "glob": "^7.2.0",
+    "esbuild": "^0.14.11"
+  }
+}
