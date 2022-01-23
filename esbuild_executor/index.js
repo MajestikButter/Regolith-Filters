@@ -32,7 +32,8 @@ for (let k in typeMap) {
   if (typeMap[k] === "array") {
     if (!Array.isArray(settings[k])) throwTypeError(k);
   } else if (typeMap[k] === "object") {
-    if (Array.isArray(settings[k])) throwTypeError(k);
+    if (typeof settings[k] !== "object" || Array.isArray(settings[k]))
+      throwTypeError(k);
   } else if (typeof settings[k] !== typeMap[k]) throwTypeError(k);
 }
 
