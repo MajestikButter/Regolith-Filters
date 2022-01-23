@@ -6,8 +6,8 @@ const defSettings = {
   ignoreGlob: [],
   buildOptions: {
     external: ["mojang-minecraft", "mojang-gametest"],
-    entryPoints: ["src/index.ts"],
-    outfile: "./scripts/index.js",
+    entryPoints: ["BP/src/index.ts"],
+    outfile: "BP/scripts/index.js",
     target: "es2020",
     format: "esm",
     bundle: true,
