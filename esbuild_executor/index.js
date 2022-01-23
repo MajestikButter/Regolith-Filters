@@ -37,15 +37,7 @@ for (let k in typeMap) {
 }
 
 require("esbuild")
-  .build({
-    external: ["mojang-minecraft", "mojang-gametest"],
-    entryPoints: ["BP/src/index.ts"],
-    outfile: process.argv[2],
-    target: "es2020",
-    format: "esm",
-    bundle: true,
-    minify: true,
-  })
+  .build(settings.buildOptions)
   .then(() => {
     if (settings.removeGlob) {
       glob(
