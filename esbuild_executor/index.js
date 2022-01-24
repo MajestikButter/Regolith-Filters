@@ -47,7 +47,9 @@ require("esbuild")
           ignore: settings.ignoreGlob,
         },
         (err, matches) => {
-          matches.forEach((v) => fs.unlinkSync(v));
+          matches.forEach((v) =>
+            fs.rmSync(v, { recursive: true, force: true })
+          );
         }
       );
     }
