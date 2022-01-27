@@ -12,7 +12,7 @@ A regolith filter for using esbuild
 
 ```js
 {
-  external: ["mojang-minecraft", "mojang-gametest"],
+  external: ["mojang-minecraft", "mojang-minecraft-ui", "mojang-gametest"],
   entryPoints: ["BP/src/index.ts"],
   outfile: "BP/scripts/index.js",
   target: "es2020",
